@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import UserGraphs from './components/contestGraphs';
+import DailySubmissionsHeatmap from './components/dailySubmissionHeatmap'
 
 
 function UserDashboard() {
@@ -43,21 +45,10 @@ function UserDashboard() {
           <p><strong>Contest Count:</strong> {userData.contestCount}</p>
           <p><strong>Last Active:</strong> {new Date(userData.lastActive).toDateString()}</p>
 
-          <h3>Contests:</h3>
-          <ul>
-            {userData.contests.map((contest, index) => (
-              <li key={index}>
-                {contest.contestName} - Rank: {contest.rank}, Date: {contest.contestDate}
-              </li>
-            ))}
-          </ul>
-
-          <h3>Daily Submissions:</h3>
-          <ul>
-            {Object.entries(userData.dailySubmissions).map(([date, count]) => (
-              <li key={date}>{date}: {count} submissions</li>
-            ))}
-          </ul>
+          {/* Add UserGraphs component */}
+          <h3>Daily Submissions Heatmap</h3>
+          <DailySubmissionsHeatmap dailySubmissions={userData.dailySubmissions} />
+          <UserGraphs contests={userData.contests}/>
         </div>
       )}
     </div>

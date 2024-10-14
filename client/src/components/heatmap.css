@@ -1,21 +1,23 @@
-/* Define color scale for submission intensity */
-.color-empty {
-    fill: #ebedf0;
-  }
-  
-  .color-scale-1 {
-    fill: #c6e48b;
-  }
-  
-  .color-scale-2 {
-    fill: #7bc96f;
-  }
-  
-  .color-scale-3 {
-    fill: #239a3b;
-  }
-  
-  .color-scale-4 {
-    fill: #196127;
-  }
-  
+/* src/heatmap.css */
+.heatmap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Responsive columns */
+  gap: 5px; /* Space between cells */
+  padding: 10px; /* Padding around the heatmap */
+}
+
+.heatmap-cell {
+  width: 50px; /* Width of each cell */
+  height: 50px; /* Height of each cell */
+  display: flex;
+  justify-content: center; /* Center the text horizontally */
+  align-items: center; /* Center the text vertically */
+  border: 1px solid #ccc; /* Optional border for visibility */
+  border-radius: 5px; /* Rounded corners */
+  transition: transform 0.2s; /* Smooth scale effect on hover */
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.1); /* Slightly enlarge cell on hover */
+  cursor: pointer; /* Change cursor to pointer */
+}

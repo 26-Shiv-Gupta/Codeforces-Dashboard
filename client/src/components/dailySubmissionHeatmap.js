@@ -1,50 +1,53 @@
 import React from 'react';
-import CalendarHeatmap from 'react-calendar-heatmap';
-import 'react-calendar-heatmap/dist/styles.css';
-import './heatmap.css'; // Ensure this CSS file exists
-import {Tooltip} from 'react-tooltip';
+import './heatmap.css'; // Import the CSS file
 
-function DailySubmissionsHeatmap({ dailySubmissions }) {
-  // Prepare data in the format the heatmap expects: { date, count }
-  const heatmapData = Object.entries(dailySubmissions).map(([date, count]) => ({
-    date: new Date(date),  // Convert to Date object if necessary
-    count,
-  }));
+const DailySubmissionHeatmap = ({ dailySubmissions }) => {
+    // Generate date range from November 1, 2023, to October 14, 2024
+    const currentDate = new Date();
+    
+    // Calculate the start date (1st of the month 11 months ago)
+    const previousDate = new Date(currentDate.getFullYear()-1, currentDate.getMonth(), 1);
+    
+    const generateDateRange = (currentDate, previousDate) => {
+        const dateArray = [];
+        let startDate = previousDate;
 
-  // Get the current year to show a one-year heatmap
-  const currentYear = new Date().getFullYear();
+        while (startDate <= currentDate) {
+            dateArray.push(currentDate.toISOString().split('T')[0]); // Format: YYYY-MM-DD
+            currentDate.setDate(currentDate.getDate() + 1); // Increment date by 1 day
+        }
 
-  // Optional: Check if there's any data
-  if (heatmapData.length === 0) {
-    return <p>No submissions data available.</p>;
-  }
+        console.log(dateArray);
 
-  return (
-    <div>
-      <h3>Daily Submissions Heatmap</h3>
-      <CalendarHeatmap
-        startDate={new Date(`${currentYear}-01-01`)}  // Start from January 1st of the current year
-        endDate={new Date(`${currentYear}-12-31`)}    // End on December 31st of the current year
-        values={heatmapData}                          // The data that contains submission count
-        classForValue={(value) => {
-          if (!value) {
-            return 'color-empty';  // No submissions on that day
-          }
-          return `color-scale-${Math.min(value.count, 4)}`;  // Scale submission count to 4 levels
-        }}
-        tooltipDataAttrs={(value) => {
-          if (!value || !value.date) {
-            return { 'data-tip': 'No submissions' };
-          }
-          return {
-            'data-tip': `${value.date.toDateString()}: ${value.count} submissions`, // Format date for tooltip
-          };
-        }}
-        showWeekdayLabels={true}   // Show labels for each weekday
-      />
-      {/* <Tooltip /> */}
-    </div>
-  );
-}
+        return dateArray;
+    };
 
-export default DailySubmissionsHeatmap;
+    generateDateRange(currentDate, previousDate);
+
+    // // Create an array of dates
+    // const allDates = generateDateRange(startDate, endDate);
+
+    // // Transform daily submissions into a map for easier lookup
+    // const submissionsMap = Object.entries(dailySubmissions).reduce((acc, [date, value]) => {
+    //     acc[date] = value; // Map date to submission count
+    //     return acc;
+    // }, {});
+
+    // // Prepare heatmap data
+    // const heatmapData = allDates.map(date => ({
+    //     date,
+    //     value: submissionsMap[date] || 0, // Get the submission count or default to 0
+    // }));
+
+    return (
+        <div className="heatmap">
+            {/* {heatmapData.map(({ date, value }) => (
+                <div key={date} className="heatmap-cell" title={`${date}: ${value}`}>
+                    <span>{value}</span>
+                </div>
+            ))} */}
+        </div>
+    );
+};
+
+export default DailySubmissionHeatmap;

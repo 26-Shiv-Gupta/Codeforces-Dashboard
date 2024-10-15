@@ -48,7 +48,7 @@ function UserDashboard() {
           {/* Add UserGraphs component */}
           <h3>Daily Submissions Heatmap</h3>
           <DailySubmissionsHeatmap dailySubmissions={userData.dailySubmissions} />
-          <UserGraphs contests={userData.contests}/>
+          {/* <UserGraphs contests={userData.contests}/> */}
         </div>
       )}
     </div>

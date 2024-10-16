@@ -1,23 +1,42 @@
 /* src/heatmap.css */
-.heatmap {
+.heatmap-container {
+  display: flex;
+  /* flex-direction: column; */
+  gap: 10px; /* Space between months */
+}
+
+.heatmap-month {
+  margin-bottom: 20px; /* Add space below each month */
+}
+
+.heatmap-weekdays {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Responsive columns */
-  gap: 5px; /* Space between cells */
-  padding: 10px; /* Padding around the heatmap */
+  grid-template-columns: repeat(7, 1fr); /* Seven columns for Monday to Sunday */
+  gap: 5px; /* Space between columns (days of the week) */
+}
+
+.heatmap-day-column {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Space between cells in the same column (same weekday) */
 }
 
 .heatmap-cell {
-  width: 50px; /* Width of each cell */
-  height: 50px; /* Height of each cell */
+  width: 10px; /* Width of each cell */
+  height: 10px; /* Height of each cell */
   display: flex;
   justify-content: center; /* Center the text horizontally */
   align-items: center; /* Center the text vertically */
   border: 1px solid #ccc; /* Optional border for visibility */
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 2px; /* Rounded corners */
   transition: transform 0.2s; /* Smooth scale effect on hover */
 }
 
 .heatmap-cell:hover {
-  transform: scale(1.1); /* Slightly enlarge cell on hover */
+  /* transform: scale(1.1); Slightly enlarge cell on hover */
   cursor: pointer; /* Change cursor to pointer */
+}
+
+h4 {
+  text-align: center; /* Center the month name */
 }

@@ -46,7 +46,7 @@ const DailySubmissionHeatmap = ({ dailySubmissions }) => {
                 months[month] = [];
             }
             if (months[month].length === 0) {
-                for(let i=0; i<dayOfWeek; i++) {
+                for (let i = 0; i < dayOfWeek; i++) {
                     months[month].push(null);
                 }
             }
@@ -69,38 +69,41 @@ const DailySubmissionHeatmap = ({ dailySubmissions }) => {
         } else {
             return 'very-high-activity'; // For the highest activity
         }
-    };    
+    };
+    const getMonthName = (month) => {
+        const date = new Date(month + '-01'); // Create a new Date object
+        return date.toLocaleString('default', { month: 'short'}); // Get the full month name and year
+    };
+
 
     return (
         <div className="heatmap-container">
-    {Object.entries(monthlyHeatmapData).map(([month, days], monthIndex) => (
-        <div key={monthIndex} className="heatmap-month">
-            <h4>{month}</h4>
-            <div className="heatmap-grid">
-                {/* Chunk the days into weeks of 7 days each */}
-                {Array.from({ length: Math.ceil(days.length / 7) }, (_, weekIndex) => (
-                    <div key={weekIndex} className="heatmap-week">
-                        {days.slice(weekIndex * 7, weekIndex * 7 + 7).map((day, dayIndex) => (
-                            day ? ( // Only render the cell if 'day' is not null
-                                <div
-                                    key={dayIndex}
-                                    className={`heatmap-cell ${getGlowClass(day.value)}`}
-                                    title={`${day.date}: ${day.value}`}
-                                >
-                                    {/* <span>{day.value}</span> */}
-                                </div>
-                            ) : (
-                                <div key={dayIndex} className="heatmap-cell blank"></div> // Render a blank cell if 'day' is null
-                            )
+            {Object.entries(monthlyHeatmapData).map(([month, days], monthIndex) => (
+                <div key={monthIndex} className="heatmap-month">
+                    <div className="heatmap-grid">
+                        {/* Chunk the days into weeks of 7 days each */}
+                        {Array.from({ length: Math.ceil(days.length / 7) }, (_, weekIndex) => (
+                            <div key={weekIndex} className="heatmap-week">
+                                {days.slice(weekIndex * 7, weekIndex * 7 + 7).map((day, dayIndex) => (
+                                    day ? ( // Only render the cell if 'day' is not null
+                                        <div
+                                            key={dayIndex}
+                                            className={`heatmap-cell ${getGlowClass(day.value)}`}
+                                            title={`${day.date}: ${day.value}`}
+                                        >
+                                            {/* <span>{day.value}</span> */}
+                                        </div>
+                                    ) : (
+                                        <div key={dayIndex} className="heatmap-cell blank"></div> // Render a blank cell if 'day' is null
+                                    )
+                                ))}
+                            </div>
                         ))}
                     </div>
-                ))}
-            </div>
+                    <h4>{getMonthName(month)}</h4>
+                </div>
+            ))}
         </div>
-    ))}
-</div>
-
-  
     );
 };
 

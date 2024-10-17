@@ -38,9 +38,12 @@ function UserDashboard() {
       {userData && Object.keys(userData).length > 0 && (
         <div>
           <h2>User Profile</h2>
+          <p><strong>User id:</strong> {userData._id}</p>
           <p><strong>Username:</strong> {userData.username}</p>
-          <p><strong>Rank:</strong> {userData.rank}</p>
+          <p><strong>first name:</strong> {userData.firstName}</p>
+          <p><strong>last name:</strong> {userData.lastName}</p>
           <p><strong>Rating:</strong> {userData.rating}</p>
+          <p><strong>Rank:</strong> {userData.rank}</p>
           <p><strong>Problems Solved:</strong> {userData.problemsSolved}</p>
           <p><strong>Contest Count:</strong> {userData.contestCount}</p>
           <p><strong>Last Active:</strong> {new Date(userData.lastActive).toDateString()}</p>
@@ -48,7 +51,7 @@ function UserDashboard() {
           {/* Add UserGraphs component */}
           <h3>Daily Submissions Heatmap</h3>
           <DailySubmissionsHeatmap dailySubmissions={userData.dailySubmissions} />
-          {/* <UserGraphs contests={userData.contests}/> */}
+          <UserGraphs contests={userData.contests}/>
         </div>
       )}
     </div>

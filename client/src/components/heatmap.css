@@ -3,9 +3,12 @@
 }
 
 .heatmap-month {
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   text-align: center;
   margin-right: 10px;
+} 
+.heatmap-month h4{
+  margin: 0;
 }
 
 .heatmap-grid {
@@ -26,6 +29,7 @@
   vertical-align: middle;
   border-radius: 2px;
   margin: 2px;
+  cursor: pointer;
 }
 
 .empty {
@@ -40,21 +44,21 @@
 }
 
 .no-activity {
-  background-color: #e5e5e5;
+  background-color: #fbf1f1;
 }
 .low-activity {
-  background-color: #b8ff79;
+  background-color: #febaba;
 }
 
 .medium-activity {
-  background-color: #33ff3d;
+  background-color: #ff8383;
 }
 
 .high-activity {
-  background-color: #009989;
+  background-color: #fb3a3a;
 }
 
 .very-high-activity {
-  background-color: #00683b;
+  background-color: #fd0000;
 }
 

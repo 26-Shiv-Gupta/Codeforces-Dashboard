@@ -6,7 +6,7 @@ const DailySubmissionHeatmap = ({ dailySubmissions }) => {
     const currentDate = new Date();
 
     // Calculate the start date (1st of the month 11 months ago)
-    const previousDate = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), 2);
+    const previousDate = new Date(currentDate.getFullYear() - 1, currentDate.getMonth()+1, 2);
 
     const generateDateRange = (startDate, endDate) => {
         const dateArray = [];

@@ -6,7 +6,7 @@ const DailySubmissionHeatmap = ({ dailySubmissions }) => {
     const currentDate = new Date();
 
     // Calculate the start date (1st of the month 11 months ago)
-    const previousDate = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), 1);
+    const previousDate = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), 2);
 
     const generateDateRange = (startDate, endDate) => {
         const dateArray = [];
@@ -43,36 +43,64 @@ const DailySubmissionHeatmap = ({ dailySubmissions }) => {
 
             const month = date.slice(0, 7); // Extract YYYY-MM for grouping
             if (!months[month]) {
-                months[month] = new Array(7).fill(null).map(() => []); // Create an array of 7 arrays (one for each day of the week)
+                months[month] = [];
             }
-            // months[month][dayOfWeek].push({ date, value});
+            if (months[month].length === 0) {
+                for(let i=0; i<dayOfWeek; i++) {
+                    months[month].push(null);
+                }
+            }
+            months[month].push({ date, value });
         });
         return months;
     };
 
     const monthlyHeatmapData = groupByMonth(heatmapData);
 
-    console.log(monthlyHeatmapData)
+    const getGlowClass = (value) => {
+        if (value === 0) {
+            return 'no-activity'; // No submissions, no glow
+        } else if (value <= 2) {
+            return 'low-activity';
+        } else if (value <= 5) {
+            return 'medium-activity';
+        } else if (value <= 10) {
+            return 'high-activity';
+        } else {
+            return 'very-high-activity'; // For the highest activity
+        }
+    };    
 
     return (
         <div className="heatmap-container">
-            {Object.entries(monthlyHeatmapData).map(([month, daysByWeekday], monthIndex) => (
-                <div key={monthIndex} className="heatmap-month">
-                    <h4>{month}</h4>
-                    <div className="heatmap-weekdays">
-                        {daysByWeekday.map((days, dayOfWeek) => (
-                            <div key={dayOfWeek} className="heatmap-day-column">
-                                {days.map(({ date, value }) => (
-                                    <div key={date} className="heatmap-cell" title={`${date}: ${value}`}>
-                                        <span>{value}</span> {/* Display value */}
-                                    </div>
-                                ))}
-                            </div>
+    {Object.entries(monthlyHeatmapData).map(([month, days], monthIndex) => (
+        <div key={monthIndex} className="heatmap-month">
+            <h4>{month}</h4>
+            <div className="heatmap-grid">
+                {/* Chunk the days into weeks of 7 days each */}
+                {Array.from({ length: Math.ceil(days.length / 7) }, (_, weekIndex) => (
+                    <div key={weekIndex} className="heatmap-week">
+                        {days.slice(weekIndex * 7, weekIndex * 7 + 7).map((day, dayIndex) => (
+                            day ? ( // Only render the cell if 'day' is not null
+                                <div
+                                    key={dayIndex}
+                                    className={`heatmap-cell ${getGlowClass(day.value)}`}
+                                    title={`${day.date}: ${day.value}`}
+                                >
+                                    {/* <span>{day.value}</span> */}
+                                </div>
+                            ) : (
+                                <div key={dayIndex} className="heatmap-cell blank"></div> // Render a blank cell if 'day' is null
+                            )
                         ))}
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
+    ))}
+</div>
+
+  
     );
 };
 

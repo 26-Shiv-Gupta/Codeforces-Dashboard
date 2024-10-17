@@ -1,42 +1,60 @@
-/* src/heatmap.css */
 .heatmap-container {
-  display: flex;
-  /* flex-direction: column; */
-  gap: 10px; /* Space between months */
+  display: flex;  
 }
 
 .heatmap-month {
-  margin-bottom: 20px; /* Add space below each month */
+  margin-bottom: 20px;
+  text-align: center;
+  margin-right: 10px;
 }
 
-.heatmap-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); /* Seven columns for Monday to Sunday */
-  gap: 5px; /* Space between columns (days of the week) */
+.heatmap-grid {
+  display: flex;
+  flex-direction: row;
 }
 
-.heatmap-day-column {
+.heatmap-week {
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Space between cells in the same column (same weekday) */
 }
 
 .heatmap-cell {
-  width: 10px; /* Width of each cell */
-  height: 10px; /* Height of each cell */
-  display: flex;
-  justify-content: center; /* Center the text horizontally */
-  align-items: center; /* Center the text vertically */
-  border: 1px solid #ccc; /* Optional border for visibility */
-  border-radius: 2px; /* Rounded corners */
-  transition: transform 0.2s; /* Smooth scale effect on hover */
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 2px;
+  margin: 2px;
 }
 
-.heatmap-cell:hover {
-  /* transform: scale(1.1); Slightly enlarge cell on hover */
-  cursor: pointer; /* Change cursor to pointer */
+.empty {
+  background-color: #e0e0e0; /* Lighter color for days with no submissions */
+  color: transparent;
+}
+.heatmap-cell.blank {
+  background-color: transparent;
+  border: none; /* Optional: remove the border */
+  width: 10px;
+  height: 10px;
 }
 
-h4 {
-  text-align: center; /* Center the month name */
+.no-activity {
+  background-color: #e5e5e5;
 }
+.low-activity {
+  background-color: #b8ff79;
+}
+
+.medium-activity {
+  background-color: #33ff3d;
+}
+
+.high-activity {
+  background-color: #009989;
+}
+
+.very-high-activity {
+  background-color: #00683b;
+}
+
